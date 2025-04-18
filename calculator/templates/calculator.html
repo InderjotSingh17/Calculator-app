@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Calculator</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            transition: background 0.3s;
+        }
+
+        .container {
+            max-width: 350px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .display {
+            width: 100%;
+            height: 50px;
+            font-size: 1.5em;
+            text-align: right;
+            padding: 10px;
+            border: none;
+            background: #eaeaea;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            width: 100%;
+            height: 60px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #28a745;
+            color: white;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .operator {
+            background: #ff9500;
+        }
+
+        .operator:hover {
+            background: #e08900;
+        }
+
+        .clear {
+            background: #dc3545;
+        }
+
+        .clear:hover {
+            background: #c82333;
+        }
+
+        .dark-mode {
+            background: #222;
+            color: white;
+        }
+
+        .dark-mode .container {
+            background: #333;
+            color: white;
+        }
+
+        .dark-mode .display {
+            background: #555;
+            color: white;
+        }
+
+        .toggle-theme {
+            margin-top: 10px;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: white;
+            font-size: 1em;
+        }
+
+        .toggle-theme:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="toggle-theme" onclick="toggleTheme()">🌙 Toggle Dark Mode</button>
+
+    <div class="container">
+        <input type="text" id="display" class="display" readonly>
+        
+        <div class="buttons">
+            <button onclick="clearDisplay()" class="clear">C</button>
+            <button onclick="appendToDisplay('%')" class="operator">%</button>
+            <button onclick="appendToDisplay('^')" class="operator">^</button>
+            <button onclick="appendToDisplay('/')" class="operator">÷</button>
+
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('*')" class="operator">×</button>
+
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('-')" class="operator">−</button>
+
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('+')" class="operator">+</button>
+
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <script>
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        function calculateResult() {
+            let expression = document.getElementById('display').value;
+            
+            // Handle exponentiation (^) since JavaScript uses **
+            expression = expression.replace(/\^/g, '**');
+            
+            try {
+                document.getElementById('display').value = eval(expression);
+            } catch (error) {
+                document.getElementById('display').value = "Error";
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+
+</body>
+</html>
